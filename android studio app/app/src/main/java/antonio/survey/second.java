@@ -47,6 +47,8 @@ public class second extends AppCompatActivity {
         EditText displayText = (EditText) findViewById(R.id.displayText);
 
 
+        displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
+
         saveFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
