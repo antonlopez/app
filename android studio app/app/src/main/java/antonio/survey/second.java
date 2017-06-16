@@ -10,7 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+import static antonio.survey.R.id.displayText;
 
 
 public class second extends AppCompatActivity {
@@ -29,7 +36,7 @@ public class second extends AppCompatActivity {
         EditText displayText = (EditText) findViewById(R.id.displayText);
 
 
-        displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
+        //displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
 
         saveFile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,10 +44,34 @@ public class second extends AppCompatActivity {
                 Snackbar.make(view, "Saving file...", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
 
+                saveFile();
+
             }
 
         });
 
+    }
+
+
+    public void saveFile() {
+
+        try {
+            File myFile = new File("/sdcard/mysdfile.txt");
+            myFile.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(myFile);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+
+            EditText toField = (EditText) findViewById(displayText);//TODO where the text is pulling from
+            String data = toField.getText().toString();
+            myOutWriter.append(data);
+            myOutWriter.close();
+            Toast.makeText(getBaseContext(),
+                    "Done writing SD '/sdcard/mysdfile.txt'",
+                    Toast.LENGTH_SHORT).show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

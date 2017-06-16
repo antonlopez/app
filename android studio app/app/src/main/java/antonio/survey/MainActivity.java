@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity  {
 
                 Log.d("picUri", picUri.toString());
                 Log.d("filePath", selectedImagePath);
-                Toast.makeText(getApplicationContext(), "The selected path is: "+ selectedImagePath, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "The selected path is: "+ selectedImagePath, Toast.LENGTH_LONG).show();
 
                 selectedImagePreview.setImageURI(picUri);
 
@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity  {
 
                             String img = jObj.getString(0);
 
-                            Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+                         //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
 
                         } catch (JSONException e) {
                             // JSON error
