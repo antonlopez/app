@@ -43,5 +43,14 @@
         android:layout_alignBottom="@+id/search"
         android:layout_alignEnd="@+id/image_preview" />
 
+    <Button
+        android:id="@+id/setTemplate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:text="set Template" />
+
 
 </RelativeLayout>
