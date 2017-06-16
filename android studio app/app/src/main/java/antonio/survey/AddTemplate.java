@@ -191,7 +191,7 @@ public class AddTemplate extends AppCompatActivity {
 
                             String img = jObj.getString(0);
 
-                            DataManager.serverData = img;
+                            DataManager.templateData = img;
 
 
                            // Toast.makeText(getApplicationContext(), "Letter: "+ data +" saved...", Toast.LENGTH_LONG).show();
