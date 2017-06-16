@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddTemplate"></activity>
+        <activity android:name=".second"></activity>
     </application>
 
 </manifest>

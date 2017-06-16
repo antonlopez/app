@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -23,36 +24,37 @@ import android.widget.TextView;
 
 
 
-public class second extends Fragment {
+public class second extends AppCompatActivity {
 
 
 
 
 
-    public second(){
-        //  empty constructor
 
-    }
 
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.second, container, false);
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.second);
 
 
 
 
-        Button saveFile = (Button) rootView.findViewById(R.id.saveFile);
+        Button saveFile = (Button) findViewById(R.id.saveFile);
+
+        EditText displayText = (EditText) findViewById(R.id.displayText);
+
+
+        displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
 
         saveFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Saving file...", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
-                ViewPager pager = (ViewPager) getActivity().findViewById(R.id.container);  // Jump to the next fragment
-                pager.setCurrentItem(3);
+
 
 
 
@@ -70,39 +72,30 @@ public class second extends Fragment {
 
 
 
-        return rootView;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    @Override
-    public void onActivityCreated(Bundle SavedInstanceState){
-        super.onActivityCreated(SavedInstanceState);
-
-
-
-
-
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
