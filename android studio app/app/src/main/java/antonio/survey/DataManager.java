@@ -6,11 +6,15 @@ package antonio.survey;
 
 public class DataManager {
 
-    public static String name, age, major, phoneNumber, emailAddress, serverData;
+    public static String name, age, major, phoneNumber, emailAddress, serverData, templateData;
 
     public static  int happiness, BibleKnowledge, believeinGod, interested;
 
     public static  boolean info;
+
+    public static int[] receivedInfo, template;
+
+
 
 
 
