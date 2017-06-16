@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity  {
                 // in onCreate or any event where your want the user to
                 // select a file
                imageBrowse();
-
-
-
-
+//                Intent intent = new Intent();
+//                intent.setType(IMAGE_TYPE);
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), SELECT_SINGLE_PICTURE);
             }
         });
 
