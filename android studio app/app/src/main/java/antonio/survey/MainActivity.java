@@ -116,9 +116,12 @@ public class MainActivity extends AppCompatActivity  {
 
             public void onClick(View view) {
                 if (selectedImagePath != null) {
+
                     imageUpload(selectedImagePath);
+
+                    if(DataManager.serverData != null){
                     Intent i = new Intent(MainActivity.this, second.class);
-                    startActivity(i);
+                    startActivity(i);}
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
@@ -344,6 +347,11 @@ public class MainActivity extends AppCompatActivity  {
 
 
                          //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
+
+                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
+                            DataManager.serverData = img;
 
 
                         } catch (JSONException e) {
