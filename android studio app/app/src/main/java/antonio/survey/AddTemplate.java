@@ -1,16 +1,20 @@
 package antonio.survey;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,8 +23,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
@@ -28,6 +30,10 @@ import com.android.volley.request.SimpleMultiPartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -53,8 +59,6 @@ public class AddTemplate extends AppCompatActivity {
 
     String data;
 
-
-    String x_start = "";
 
 
     public static String BASE_URL = "http://172.19.144.219:12345/images";
@@ -91,8 +95,7 @@ public class AddTemplate extends AppCompatActivity {
 
 
                 EditText toField = (EditText) findViewById(R.id.editText);
-                 data = toField.getText().toString();
-
+                data = toField.getText().toString();
 
                 ArrayList arrayList = new ArrayList();
                 SaveFile();
@@ -118,9 +121,10 @@ public class AddTemplate extends AppCompatActivity {
         findViewById(R.id.doneButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
-                EditText toField = (EditText) findViewById(editText);
-                String data = toField.getText().toString();
+                //EditText toField = (EditText) findViewById(editText);
+               // String data = toField.getText().toString();
 
+                //This should also include functions in the nextLetter Button above
 
 
 
@@ -133,6 +137,11 @@ public class AddTemplate extends AppCompatActivity {
 
         findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+
+                EditText toField = (EditText) findViewById(editText);
+                String data = toField.getText().toString();
+
+
                 Intent i = new Intent(AddTemplate.this, MainActivity.class);
                 startActivity(i);
 
@@ -140,12 +149,6 @@ public class AddTemplate extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
     }
 
 
@@ -210,19 +213,21 @@ public class AddTemplate extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         try {
-//                            JSONObject jObj = new JSONObject(response);
-//                            String message = jObj.getString("message");
-
-                            JSONArray jObj = new JSONArray(response);
-
-                            String img = jObj.getString(0);
-
-                            DataManager.templateData = img;
 
 
-                           // Toast.makeText(getApplicationContext(), "Letter: "+ data +" saved...", Toast.LENGTH_LONG).show();
+                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                            JSONArray jsonArray = new JSONArray(response);
 
-                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+//                            int x_start = jsonObject.getInt("x_start");
+//                            int y_start = jsonObject.getInt("y_start");
+//                            int x_dim = jsonObject.getInt("x_dim");
+//                            int y_dim = jsonObject.getInt("y_dim");
+//
+//                            String arr = jsonObject.getString("img");
+                            pref.edit().putString(data.toString(), jsonObject.toString()).commit();
+                            Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
+
 
                         } catch (JSONException e) {
                             // JSON error

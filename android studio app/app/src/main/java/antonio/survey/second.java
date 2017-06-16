@@ -4,34 +4,16 @@ package antonio.survey;
  * Created by antonio on 1/3/17.
  */
 
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
 
 
 public class second extends AppCompatActivity {
-
-
-
-
-
-
-
 
 
     @Override
@@ -70,57 +52,10 @@ public class second extends AppCompatActivity {
                 Snackbar.make(view, "Saving file...", Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show();
 
-
-
-
-
-
-
             }
+
         });
 
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
