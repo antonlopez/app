@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -22,14 +24,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -265,7 +273,7 @@ public class MainActivity extends AppCompatActivity  {
 
                 Log.d("picUri", picUri.toString());
                 Log.d("filePath", selectedImagePath);
-                Toast.makeText(getApplicationContext(), "The selected path is: "+ selectedImagePath, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "The selected path is: "+ selectedImagePath, Toast.LENGTH_LONG).show();
 
                 selectedImagePreview.setImageURI(picUri);
 
@@ -291,14 +299,52 @@ public class MainActivity extends AppCompatActivity  {
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         try {
-//                            JSONObject jObj = new JSONObject(response);
-//                            String message = jObj.getString("message");
+                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                            Map<String,?> entries = pref.getAll();
+                            Set<String> keys = entries.keySet();
+                            HashMap<String, Array> database = new HashMap();
+                            for (String key : keys) {
+                                String jsonstring = pref.getString(key, "");
+                                JSONObject jsonObj = new JSONObject(jsonstring);
 
-                            JSONArray jObj = new JSONArray(response);
+                                //JSONArray arr_t = jsonObj.getJSONArray("img");
+                                JSONArray array = jsonObj.optJSONArray("img");
+                                Log.d("array length", ""+ array.length());
+                                // Deal with the case of a non-array value.
+                                if (array == null) { /*...*/ }
 
-                            String img = jObj.getString(0);
+                                // Create an int array to accomodate the numbers.
+                                int[] numbers = new int[array.length()];
 
-                            Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+                                // Extract numbers from JSON array.
+                                for (int i = 0; i < array.length(); i++) {
+                                    numbers[i] = array.optInt(i);
+                                }
+
+                                //database.put(key, arr_t);
+                                //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
+
+                            }
+
+                            JSONArray jsonArray = new JSONArray(response);
+                            //for loop for all the handwritten letters json
+                            for (int i= 0; i<jsonArray.length(); i++) {
+//
+                                JSONObject LETTERS = jsonArray.getJSONObject(i);
+
+                                int x_start_i = LETTERS.getInt("x_start");
+                                int y_start_i = LETTERS.getInt("y_start");
+                                int x_dim_i = LETTERS.getInt("x_dim");
+                                int y_dim_i = LETTERS.getInt("y_dim");
+                                String arr_i = LETTERS.getString("img");
+
+
+                               // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
+                            }
+
+
+                         //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
 
                         } catch (JSONException e) {
                             // JSON error
@@ -306,7 +352,7 @@ public class MainActivity extends AppCompatActivity  {
                             Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
-                }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();

@@ -1,16 +1,14 @@
 package antonio.survey;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,8 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
@@ -28,6 +24,10 @@ import com.android.volley.request.SimpleMultiPartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -53,8 +53,6 @@ public class AddTemplate extends AppCompatActivity {
 
     String data;
 
-
-    String x_start = "";
 
 
     public static String BASE_URL = "http://172.19.144.219:12345/images";
@@ -91,8 +89,7 @@ public class AddTemplate extends AppCompatActivity {
 
 
                 EditText toField = (EditText) findViewById(R.id.editText);
-                 data = toField.getText().toString();
-
+                data = toField.getText().toString();
 
                 ArrayList arrayList = new ArrayList();
                 SaveFile();
@@ -118,9 +115,10 @@ public class AddTemplate extends AppCompatActivity {
         findViewById(R.id.doneButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
-                EditText toField = (EditText) findViewById(editText);
-                String data = toField.getText().toString();
+                //EditText toField = (EditText) findViewById(editText);
+               // String data = toField.getText().toString();
 
+                //This should also include functions in the nextLetter Button above
 
 
 
@@ -133,6 +131,11 @@ public class AddTemplate extends AppCompatActivity {
 
         findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+
+                EditText toField = (EditText) findViewById(editText);
+                String data = toField.getText().toString();
+
+
                 Intent i = new Intent(AddTemplate.this, MainActivity.class);
                 startActivity(i);
 
@@ -140,12 +143,6 @@ public class AddTemplate extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
     }
 
 
@@ -210,19 +207,13 @@ public class AddTemplate extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         try {
-//                            JSONObject jObj = new JSONObject(response);
-//                            String message = jObj.getString("message");
+                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                            JSONArray jsonArray = new JSONArray(response);
 
-                            JSONArray jObj = new JSONArray(response);
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                            String img = jObj.getString(0);
-
-                            DataManager.serverData = img;
-
-
-                           // Toast.makeText(getApplicationContext(), "Letter: "+ data +" saved...", Toast.LENGTH_LONG).show();
-
-                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+                            pref.edit().putString(data.toString(), jsonObject.toString()).commit();
+                            Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             // JSON error
@@ -243,7 +234,7 @@ public class AddTemplate extends AppCompatActivity {
     }
 
 
-    public void SaveFile(){
+    public void SaveFile() {
 
         try {
             File myFile = new File("/sdcard/mysdfile.txt");
@@ -262,70 +253,5 @@ public class AddTemplate extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        /*try {
-            File myFile = new File("/sdcard/mysdfile.txt");
-            myFile.createNewFile();
-            FileOutputStream fOut = new FileOutputStream(myFile);
-            OutputStreamWriter myOutWriter =
-                    new OutputStreamWriter(fOut);
-           // String txtData = "test";
-            myOutWriter.append(txtData.getText());
-            myOutWriter.close();
-            fOut.close();
-            Toast.makeText(getBaseContext(),
-                    "Done writing SD 'mysdfile.txt'",
-                    Toast.LENGTH_SHORT).show();
-
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-        }
-
-
-
-        /* Checks if external storage is available for read and write *
-        public boolean isExternalStorageWritable() {
-            String state = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                return true;
-            }
-            return false;
-        }
-
-/* Checks if external storage is available to at least read *
-        public boolean isExternalStorageReadable() {
-            String state = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state) ||
-                    Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-                return true;
-            }
-            return false;
-        }
-
-    public File getAlbumStorageDir(String albumName) {
-        // Get the directory for the user's public pictures directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.mkdirs()) {
-            Log.e(LOG_TAG, "Directory not created");
-        }
-        return file;
-    }*/
-
-
     }
-
 }

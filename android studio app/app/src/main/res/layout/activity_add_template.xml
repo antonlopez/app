@@ -72,12 +72,13 @@
 
     <Button
         android:id="@+id/doneButton"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="49dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="81dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -95,6 +96,7 @@
       android:layout_marginEnd="49dp"
       app:layout_constraintRight_toRightOf="parent"
       android:layout_marginBottom="16dp"
+
       android:layout_marginRight="49dp" />
   
 </android.support.constraint.ConstraintLayout>
