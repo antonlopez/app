@@ -283,14 +283,6 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-
-
-
-
-
-
-
-
     private void imageUpload(final String imagePath) {
 
         SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, BASE_URL,
@@ -309,7 +301,6 @@ public class MainActivity extends AppCompatActivity  {
 
                                 //JSONArray arr_t = jsonObj.getJSONArray("img");
                                 JSONArray array = jsonObj.optJSONArray("img");
-                                Log.d("array length", ""+ array.length());
                                 // Deal with the case of a non-array value.
                                 if (array == null) { /*...*/ }
 
@@ -333,7 +324,31 @@ public class MainActivity extends AppCompatActivity  {
                                 int y_start_i = LETTERS.getInt("y_start");
                                 int x_dim_i = LETTERS.getInt("x_dim");
                                 int y_dim_i = LETTERS.getInt("y_dim");
-                                String arr_i = LETTERS.getString("img");
+
+                                JSONArray arr_i = LETTERS.optJSONArray("img");
+
+                                // Deal with the case of a non-array value.
+                                if (arr_i == null) { /*...*/ }
+
+                                // Create an int array to accomodate the numbers.
+                                int[] pixels = new int[arr_i.length()];
+
+                                // Extract numbers from JSON array.
+                                for (int j = 0; j < arr_i.length(); j++) {
+                                    pixels[i] = arr_i.optInt(i);
+                                }
+
+                                for (Map.Entry<String, JSONArray> entry : database.entrySet()) {
+                                    String key = entry.getKey();
+                                    JSONArray value = entry.getValue();
+                                    for (int k=0; i<arr_i.length(); k++) {
+                                        //index value in uplaoded handwriting pixels[k];
+                                        //index value in template value[k];
+                                        //comparison code goes here
+                                        //store minimum score letter somewhere and then write that to a text box
+                                    }
+                                    }
+
 
                                // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
                             }
@@ -368,9 +383,5 @@ public class MainActivity extends AppCompatActivity  {
         cursor.close();
         return result;
     }
-
-
-
-
 
 }
