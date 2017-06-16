@@ -229,6 +229,9 @@ public class AddTemplate extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
 
 
+
+
+
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
