@@ -18,11 +18,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+
+import static antonio.survey.R.id.editText;
 
 public class AddTemplate extends AppCompatActivity {
 
+    private static final String LOG_TAG = "error save file";
     private MainActivity.SectionsPagerAdapter mSectionsPagerAdapter;
 
     private static FragmentManager fragmentManager;
@@ -71,22 +77,42 @@ public class AddTemplate extends AppCompatActivity {
         findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
-                EditText toField = (EditText) findViewById(R.id.editText);
+                EditText toField = (EditText) findViewById(editText);
                 String data = toField.getText().toString();
 
                 ArrayList arrayList = new ArrayList();
+                SaveFile();
 
 
                 // LetterTemplates letters = new LetterTemplates(data, img);
-
-                Intent i = new Intent(AddTemplate.this, MainActivity.class);
-                startActivity(i);
 
 
                 //this button will push the image to the database and store it with the
                 // cooresponding letter saving it in the process
             }
         });
+
+
+
+
+        findViewById(R.id.doneButton).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+
+                EditText toField = (EditText) findViewById(editText);
+                String data = toField.getText().toString();
+
+
+
+
+                ArrayList arrayList = new ArrayList();
+                Intent i = new Intent(AddTemplate.this, MainActivity.class);
+                startActivity(i);
+
+
+            }
+        });
+
+
 
 
 
@@ -196,5 +222,91 @@ public class AddTemplate extends AppCompatActivity {
         // this is our fallback here, thanks to the answer from @mad indicating this is needed for
         // working code based on images selected using other file managers
         return uri.getPath();
+    }
+
+
+    public void SaveFile(){
+
+        try {
+            File myFile = new File("/sdcard/mysdfile.txt");
+            myFile.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(myFile);
+            OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+
+            EditText toField = (EditText) findViewById(editText);//TODO where the text is pulling from
+            String data = toField.getText().toString();
+            myOutWriter.append(data);
+            myOutWriter.close();
+            Toast.makeText(getBaseContext(),
+                    "Done writing SD '/sdcard/mysdfile.txt'",
+                    Toast.LENGTH_SHORT).show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        /*try {
+            File myFile = new File("/sdcard/mysdfile.txt");
+            myFile.createNewFile();
+            FileOutputStream fOut = new FileOutputStream(myFile);
+            OutputStreamWriter myOutWriter =
+                    new OutputStreamWriter(fOut);
+           // String txtData = "test";
+            myOutWriter.append(txtData.getText());
+            myOutWriter.close();
+            fOut.close();
+            Toast.makeText(getBaseContext(),
+                    "Done writing SD 'mysdfile.txt'",
+                    Toast.LENGTH_SHORT).show();
+
+
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+
+        /* Checks if external storage is available for read and write *
+        public boolean isExternalStorageWritable() {
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state)) {
+                return true;
+            }
+            return false;
+        }
+
+/* Checks if external storage is available to at least read *
+        public boolean isExternalStorageReadable() {
+            String state = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state) ||
+                    Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+                return true;
+            }
+            return false;
+        }
+
+    public File getAlbumStorageDir(String albumName) {
+        // Get the directory for the user's public pictures directory.
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), albumName);
+        if (!file.mkdirs()) {
+            Log.e(LOG_TAG, "Directory not created");
+        }
+        return file;
+    }*/
+
+
     }
 }
