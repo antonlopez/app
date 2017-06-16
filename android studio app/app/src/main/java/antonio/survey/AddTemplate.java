@@ -4,11 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +28,7 @@ import com.android.volley.request.SimpleMultiPartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +51,6 @@ public class AddTemplate extends AppCompatActivity {
 
     String data;
 
-
-    String x_start = "";
 
 
     public static String BASE_URL = "http://172.19.144.219:12345/images";
@@ -184,19 +185,18 @@ public class AddTemplate extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         try {
-//                            JSONObject jObj = new JSONObject(response);
-//                            String message = jObj.getString("message");
+                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                            JSONArray jsonArray = new JSONArray(response);
 
-                            JSONArray jObj = new JSONArray(response);
-
-                            String img = jObj.getString(0);
-
-                            DataManager.serverData = img;
-
-
-                           // Toast.makeText(getApplicationContext(), "Letter: "+ data +" saved...", Toast.LENGTH_LONG).show();
-
-                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+//                            int x_start = jsonObject.getInt("x_start");
+//                            int y_start = jsonObject.getInt("y_start");
+//                            int x_dim = jsonObject.getInt("x_dim");
+//                            int y_dim = jsonObject.getInt("y_dim");
+//
+//                            String arr = jsonObject.getString("img");
+                            pref.edit().putString(data.toString(), jsonObject.toString()).commit();
+                            Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             // JSON error
