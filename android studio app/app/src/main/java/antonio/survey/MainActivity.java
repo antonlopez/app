@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity  {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
-                            HashMap<String, Array> database = new HashMap();
+                            HashMap<String, JSONArray> database = new HashMap();
                             for (String key : keys) {
                                 String jsonstring = pref.getString(key, "");
                                 JSONObject jsonObj = new JSONObject(jsonstring);
@@ -320,10 +320,8 @@ public class MainActivity extends AppCompatActivity  {
                                 for (int i = 0; i < array.length(); i++) {
                                     numbers[i] = array.optInt(i);
                                 }
-
-                                //database.put(key, arr_t);
+                                database.put(key, array);
                                 //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
-
                             }
 
                             JSONArray jsonArray = new JSONArray(response);
@@ -331,20 +329,16 @@ public class MainActivity extends AppCompatActivity  {
                             for (int i= 0; i<jsonArray.length(); i++) {
 //
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
-
                                 int x_start_i = LETTERS.getInt("x_start");
                                 int y_start_i = LETTERS.getInt("y_start");
                                 int x_dim_i = LETTERS.getInt("x_dim");
                                 int y_dim_i = LETTERS.getInt("y_dim");
                                 String arr_i = LETTERS.getString("img");
 
-
                                // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
                             }
 
-
                          //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
-
 
                         } catch (JSONException e) {
                             // JSON error
@@ -363,8 +357,6 @@ public class MainActivity extends AppCompatActivity  {
         ServerConnect.getInstance().addToRequestQueue(smr);
 
     }
-
-
 
     private String getPath(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
