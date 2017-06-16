@@ -348,6 +348,12 @@ public class MainActivity extends AppCompatActivity  {
 
                          //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
 
+<<<<<<< HEAD
+=======
+                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
+                            DataManager.serverData = img;
+>>>>>>> juan-compare-letters
 
                             //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
 
