@@ -4,10 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -30,6 +32,10 @@ import com.android.volley.request.SimpleMultiPartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Map;
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -291,15 +297,37 @@ public class MainActivity extends AppCompatActivity  {
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         try {
-//                            JSONObject jObj = new JSONObject(response);
-//                            String message = jObj.getString("message");
+                            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                            Map<String,?> entries = pref.getAll();
+                            Set<String> keys = entries.keySet();
 
-                            JSONArray jObj = new JSONArray(response);
+                            JSONArray jsonArray = new JSONArray(response);
+                            //for loop for all the handwritten letters json
+                            for (int i= 0; i<jsonArray.length(); i++) {
+//
+                                JSONObject LETTERS = jsonArray.getJSONObject(i);
 
-                            String img = jObj.getString(0);
+                                int x_start_i = LETTERS.getInt("x_start");
+                                int y_start_i = LETTERS.getInt("y_start");
+                                int x_dim_i = LETTERS.getInt("x_dim");
+                                int y_dim_i = LETTERS.getInt("y_dim");
+                                String arr_i = LETTERS.getString("img");
 
-                            Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+                                for (String key : keys) {
+                                    String jsonstring = pref.getString(key, "");
+                                    Gson g = new Gson(); Player p = g.fromJson(jsonString, Player.class)
+                                            
+                                    int x_start_t = LETTERS.getInt("x_start");
+                                    int y_start_t = LETTERS.getInt("y_start");
+                                    int x_dim_t = LETTERS.getInt("x_dim");
+                                    int y_dim_t = LETTERS.getInt("y_dim");
+                                    String arr_t = LETTERS.getString("img");
 
+                                }
+
+
+                                Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
+                            }
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
