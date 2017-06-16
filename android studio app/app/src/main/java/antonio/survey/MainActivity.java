@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity  {
     int y_start_i;
     int x_dim_i;
     int y_dim_i;
+    int jsonArrayLength = 0;
+
 
     public static String BASE_URL = "http://172.19.144.219:12345/images";
 
@@ -310,10 +312,9 @@ public class MainActivity extends AppCompatActivity  {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
-<<<<<<< HEAD
                             for (String key : keys) {
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
-                                jsonArray = new JSONArray(response);
+
 
                                 String jsonstring = pref.getString(key, "");
 
@@ -324,7 +325,6 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-=======
                             HashMap<String, Array> database = new HashMap();
                             for (String key : keys) {
                                 String jsonstring = pref.getString(key, "");
@@ -348,15 +348,17 @@ public class MainActivity extends AppCompatActivity  {
                                 //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
 
                             }
->>>>>>> 1e7cc248dae7312962f56cb41adeabeddfe1c940
 
-                            JSONArray jsonArray = new JSONArray(response);
-                                String arr_t = LETTERS.getString("img");
 
-                            }
+
 
                             //JSONArray jsonArray = new JSONArray(response);
                             //for loop for all the handwritten letters json
+
+
+                                jsonArrayLength = jsonArray.length();//shows the length of the json array
+
+
                             for (int i= 0; i<jsonArray.length(); i++) {
 //
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
@@ -458,10 +460,28 @@ public class MainActivity extends AppCompatActivity  {
 
     public String getOrder(){
 
+        double x1 = x_start_i;
+        double x2 = x_dim_i;
+        double y1 = y_start_i;
+        double y2 = y_dim_i;
+        String nextLetter;
+        for (int i= 0; i<jsonArrayLength; i++) {
+            if(y2){
+                if(there is no greater x)
+                    add y, x = 0
+            }
+
+        }
+//pull array1 x_dim
+        //pull array2 x_start
 
 
         return null;
     }
+
+    public Array getNextLetter(){
+
+        return null;}
 
 
 
