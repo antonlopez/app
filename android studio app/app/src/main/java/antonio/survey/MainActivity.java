@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity  {
 
             public void onClick(View view) {
                 if (selectedImagePath != null) {
-                    imageUpload(selectedImagePath);
+                    //imageUpload(selectedImagePath);
                     Intent i = new Intent(MainActivity.this, second.class);
                     startActivity(i);
                 } else {

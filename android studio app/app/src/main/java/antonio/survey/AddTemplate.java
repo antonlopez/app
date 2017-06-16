@@ -239,7 +239,7 @@ public class AddTemplate extends AppCompatActivity {
     }
 
 
-    public void SaveFile(){
+    public void SaveFile() {
 
         try {
             File myFile = new File("/sdcard/mysdfile.txt");
@@ -259,69 +259,9 @@ public class AddTemplate extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        /*try {
-            File myFile = new File("/sdcard/mysdfile.txt");
-            myFile.createNewFile();
-            FileOutputStream fOut = new FileOutputStream(myFile);
-            OutputStreamWriter myOutWriter =
-                    new OutputStreamWriter(fOut);
-           // String txtData = "test";
-            myOutWriter.append(txtData.getText());
-            myOutWriter.close();
-            fOut.close();
-            Toast.makeText(getBaseContext(),
-                    "Done writing SD 'mysdfile.txt'",
-                    Toast.LENGTH_SHORT).show();
-
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), e.getMessage(),
-                    Toast.LENGTH_SHORT).show();
-        }
-
-
-
-        /* Checks if external storage is available for read and write *
-        public boolean isExternalStorageWritable() {
-            String state = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state)) {
-                return true;
-            }
-            return false;
-        }
-
-/* Checks if external storage is available to at least read *
-        public boolean isExternalStorageReadable() {
-            String state = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state) ||
-                    Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-                return true;
-            }
-            return false;
-        }
-
-    public File getAlbumStorageDir(String albumName) {
-        // Get the directory for the user's public pictures directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), albumName);
-        if (!file.mkdirs()) {
-            Log.e(LOG_TAG, "Directory not created");
-        }
-        return file;
-    }*/
-
-
     }
+
+
+
 
 }
