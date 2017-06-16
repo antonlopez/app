@@ -1,0 +1,179 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="antonio.survey.MainActivity$PlaceholderFragment"
+    android:id="@+id/rela"
+    android:background="@android:color/background_light">
+
+    <TextView
+        android:id="@+id/Name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="normal|bold"
+        android:text="Name:" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        app:srcCompat="@android:drawable/ic_menu_save"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Name_label"
+        android:layout_toEndOf="@+id/Name_label"
+        android:id="@+id/final_name" />
+
+    <TextView
+        android:text="Bible knowledge:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/final_happiness"
+        android:layout_marginTop="15dp"
+        android:id="@+id/final_knowledge"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Hapiness:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:id="@+id/final_happiness"
+        android:layout_below="@+id/final_major"
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold"
+        android:fontFamily="sans-serif" />
+
+    <TextView
+        android:text="Age:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/final_age"
+        android:layout_below="@+id/final_name"
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Major:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:id="@+id/final_major"
+        android:layout_below="@+id/final_age"
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/final_knowledge"
+        android:id="@+id/nameDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ageDisplay"
+        android:layout_below="@+id/final_name"
+        android:layout_toEndOf="@+id/final_major" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/final_major"
+        android:layout_alignEnd="@+id/final_knowledge"
+        android:id="@+id/majorDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/final_happiness"
+        android:layout_toEndOf="@+id/final_happiness"
+        android:layout_marginStart="11dp"
+        android:id="@+id/happinessDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/final_knowledge"
+        android:layout_toEndOf="@+id/final_knowledge"
+        android:layout_marginStart="11dp"
+        android:id="@+id/bibleKnowledgeDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/phoneLabel"
+        android:layout_toEndOf="@+id/final_knowledge"
+        android:id="@+id/phoneDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/emailLabel"
+        android:layout_alignStart="@+id/phoneDisplay"
+        android:id="@+id/emailDIsplay" />
+
+    <TextView
+        android:text="Thank you! "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/fab"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="99dp"
+        android:id="@+id/textView18"
+        android:textSize="36sp"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Believe in God:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/final_knowledge"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:id="@+id/needGodLabel"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="Phone Number:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/phoneLabel"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/needGodLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="13dp" />
+
+    <TextView
+        android:text="Email Address:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/emailLabel"
+        android:textStyle="normal|bold"
+        android:layout_below="@+id/phoneLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/phoneLabel"
+        android:layout_toEndOf="@+id/final_knowledge"
+        android:id="@+id/GodDisplay" />
+
+</RelativeLayout>
