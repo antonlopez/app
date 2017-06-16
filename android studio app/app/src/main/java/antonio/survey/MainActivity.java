@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity  {
 
     String selectedImagePath;
 
+<<<<<<< HEAD
     int x_start_i;
     int y_start_i;
     int x_dim_i;
@@ -71,6 +72,8 @@ public class MainActivity extends AppCompatActivity  {
     int jsonArrayLength = 0;
 
 
+=======
+>>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
     public static String BASE_URL = "http://172.19.144.219:12345/images";
 
 
@@ -123,9 +126,12 @@ public class MainActivity extends AppCompatActivity  {
 
             public void onClick(View view) {
                 if (selectedImagePath != null) {
+
                     imageUpload(selectedImagePath);
+
+                    if(DataManager.serverData != null){
                     Intent i = new Intent(MainActivity.this, second.class);
-                    startActivity(i);
+                    startActivity(i);}
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
@@ -290,28 +296,18 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-
-
-
-
-
-
-
-
     private void imageUpload(final String imagePath) {
 
         SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, BASE_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         Log.d("Response", response);
-                        JSONArray jsonArray = null;
-
                         try {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
+<<<<<<< HEAD
                             for (String key : keys) {
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
 
@@ -326,13 +322,15 @@ public class MainActivity extends AppCompatActivity  {
 
 
                             HashMap<String, Array> database = new HashMap();
+=======
+                            HashMap<String, JSONArray> database = new HashMap();
+>>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
                             for (String key : keys) {
                                 String jsonstring = pref.getString(key, "");
                                 JSONObject jsonObj = new JSONObject(jsonstring);
 
                                 //JSONArray arr_t = jsonObj.getJSONArray("img");
                                 JSONArray array = jsonObj.optJSONArray("img");
-                                Log.d("array length", ""+ array.length());
                                 // Deal with the case of a non-array value.
                                 if (array == null) { /*...*/ }
 
@@ -343,16 +341,18 @@ public class MainActivity extends AppCompatActivity  {
                                 for (int i = 0; i < array.length(); i++) {
                                     numbers[i] = array.optInt(i);
                                 }
-
-                                //database.put(key, arr_t);
+                                database.put(key, array);
                                 //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
-
                             }
 
+<<<<<<< HEAD
 
 
 
                             //JSONArray jsonArray = new JSONArray(response);
+=======
+                            JSONArray jsonArray = new JSONArray(response);
+>>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
                             //for loop for all the handwritten letters json
 
 
@@ -362,19 +362,51 @@ public class MainActivity extends AppCompatActivity  {
                             for (int i= 0; i<jsonArray.length(); i++) {
 //
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
-
                                 int x_start_i = LETTERS.getInt("x_start");
                                 int y_start_i = LETTERS.getInt("y_start");
                                 int x_dim_i = LETTERS.getInt("x_dim");
                                 int y_dim_i = LETTERS.getInt("y_dim");
-                                String arr_i = LETTERS.getString("img");
+
+                                JSONArray arr_i = LETTERS.optJSONArray("img");
+
+                                // Deal with the case of a non-array value.
+                                if (arr_i == null) { /*...*/ }
+
+                                // Create an int array to accomodate the numbers.
+                                int[] pixels = new int[arr_i.length()];
+
+                                // Extract numbers from JSON array.
+                                for (int j = 0; j < arr_i.length(); j++) {
+                                    pixels[i] = arr_i.optInt(i);
+                                }
+
+                                for (Map.Entry<String, JSONArray> entry : database.entrySet()) {
+                                    String key = entry.getKey();
+                                    JSONArray value = entry.getValue();
+                                    for (int k=0; i<arr_i.length(); k++) {
+                                        //index value in uplaoded handwriting pixels[k];
+                                        //index value in template value[k];
+                                        //comparison code goes here
+                                        //store minimum score letter somewhere and then write that to a text box
+                                    }
+                                    }
 
 
                                // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
                             }
 
-
                          //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
+
+                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
+                            DataManager.serverData = img;
+
+
+                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
+                            DataManager.serverData = img;
+
 
 
                         } catch (JSONException e) {
@@ -395,8 +427,6 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-
-
     private String getPath(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
         CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
@@ -408,6 +438,7 @@ public class MainActivity extends AppCompatActivity  {
         return result;
     }
 
+<<<<<<< HEAD
 
     public String getSpace(){
 
@@ -487,4 +518,6 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+=======
+>>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
 }
