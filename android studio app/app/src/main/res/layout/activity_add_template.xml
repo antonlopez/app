@@ -42,6 +42,7 @@
         android:id="@+id/nextLetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
 
 
 
@@ -51,6 +52,22 @@
         app:layout_constraintHorizontal_bias="0.144"
 
 
+=======
+<<<<<<< HEAD
+        android:layout_marginBottom="16dp"
+        android:text="Next letter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.181"
+=======
+
+
+        android:layout_marginBottom="32dp"
+        android:text="Next letter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+
+>>>>>>> juan-compare-letters
+>>>>>>> Stashed changes
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
@@ -88,6 +105,10 @@
         android:layout_marginBottom="81dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="247dp" />
+<<<<<<< HEAD
+=======
+
+>>>>>>> juan-compare-letters
 
 
   <Button
@@ -101,7 +122,14 @@
       app:layout_constraintBottom_toBottomOf="parent"
       android:layout_marginEnd="49dp"
       app:layout_constraintRight_toRightOf="parent"
+<<<<<<< Updated upstream
 
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> juan-compare-letters
+>>>>>>> Stashed changes
       android:layout_marginBottom="16dp"
 
       android:layout_marginRight="49dp" />
