@@ -114,12 +114,7 @@ public class MainActivity extends AppCompatActivity  {
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
-
-
-
-
-
-
+                
 
             }
         });
