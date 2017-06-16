@@ -12,6 +12,10 @@ public class DataManager {
 
     public static  boolean info;
 
+    public static int[] receivedInfo, template;
+
+
+
 
 
 
