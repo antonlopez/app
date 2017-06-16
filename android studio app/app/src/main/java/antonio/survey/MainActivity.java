@@ -24,7 +24,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
@@ -35,6 +34,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -309,6 +310,7 @@ public class MainActivity extends AppCompatActivity  {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
+<<<<<<< HEAD
                             for (String key : keys) {
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
                                 jsonArray = new JSONArray(response);
@@ -322,6 +324,31 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+=======
+                            HashMap<String, Array> database = new HashMap();
+                            for (String key : keys) {
+                                String jsonstring = pref.getString(key, "");
+                                JSONObject jsonObj = new JSONObject(jsonstring);
+
+                                //JSONArray arr_t = jsonObj.getJSONArray("img");
+                                JSONArray array = jsonObj.optJSONArray("img");
+                                Log.d("array length", ""+ array.length());
+                                // Deal with the case of a non-array value.
+                                if (array == null) { /*...*/ }
+
+                                // Create an int array to accomodate the numbers.
+                                int[] numbers = new int[array.length()];
+
+                                // Extract numbers from JSON array.
+                                for (int i = 0; i < array.length(); i++) {
+                                    numbers[i] = array.optInt(i);
+                                }
+
+                                //database.put(key, arr_t);
+                                //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
+
+                            }
+>>>>>>> 1e7cc248dae7312962f56cb41adeabeddfe1c940
 
                             JSONArray jsonArray = new JSONArray(response);
                                 String arr_t = LETTERS.getString("img");
@@ -340,28 +367,10 @@ public class MainActivity extends AppCompatActivity  {
                                 int y_dim_i = LETTERS.getInt("y_dim");
                                 String arr_i = LETTERS.getString("img");
 
-                                for (String key : keys) {
-                                    String jsonstring = pref.getString(key, "");
-                                    Gson g = new Gson(); Player p = g.fromJson(jsonString, Player.class)
-                                            
-                                    int x_start_t = LETTERS.getInt("x_start");
-                                    int y_start_t = LETTERS.getInt("y_start");
-                                    int x_dim_t = LETTERS.getInt("x_dim");
-                                    int y_dim_t = LETTERS.getInt("y_dim");
-                                    String arr_t = LETTERS.getString("img");
 
-                                }
-
-
-                                Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
+                               // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
                             }
 
-//                            JSONObject jObj = new JSONObject(response);
-//                            String message = jObj.getString("message");
-
-                            JSONArray jObj = new JSONArray(response);
-
-                            String img = jObj.getString(0);
 
                          //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
 
@@ -372,7 +381,7 @@ public class MainActivity extends AppCompatActivity  {
                             Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
-                }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();

@@ -34,7 +34,7 @@ public class second extends AppCompatActivity {
         Button saveFile = (Button) findViewById(R.id.saveFile);
 
         EditText displayText = (EditText) findViewById(R.id.displayText);
-        
+
 //
 //        displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
 

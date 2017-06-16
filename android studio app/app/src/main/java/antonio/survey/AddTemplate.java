@@ -211,12 +211,7 @@ public class AddTemplate extends AppCompatActivity {
                             JSONArray jsonArray = new JSONArray(response);
 
                             JSONObject jsonObject = jsonArray.getJSONObject(0);
-//                            int x_start = jsonObject.getInt("x_start");
-//                            int y_start = jsonObject.getInt("y_start");
-//                            int x_dim = jsonObject.getInt("x_dim");
-//                            int y_dim = jsonObject.getInt("y_dim");
-//
-//                            String arr = jsonObject.getString("img");
+
                             pref.edit().putString(data.toString(), jsonObject.toString()).commit();
                             Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
 
