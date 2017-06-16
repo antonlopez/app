@@ -29,11 +29,12 @@ public class second extends AppCompatActivity {
         setContentView(R.layout.second);
 
 
-
+        String test = "test";
 
         Button saveFile = (Button) findViewById(R.id.saveFile);
 
         EditText displayText = (EditText) findViewById(R.id.displayText);
+        displayText.setText(test);
 
 
        // displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
