@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity  {
 
     String selectedImagePath;
 
-<<<<<<< HEAD
     int x_start_i;
     int y_start_i;
     int x_dim_i;
@@ -72,8 +71,6 @@ public class MainActivity extends AppCompatActivity  {
     int jsonArrayLength = 0;
 
 
-=======
->>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
     public static String BASE_URL = "http://172.19.144.219:12345/images";
 
 
@@ -307,7 +304,7 @@ public class MainActivity extends AppCompatActivity  {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
-<<<<<<< HEAD
+
                             for (String key : keys) {
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
 
@@ -321,10 +318,10 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-                            HashMap<String, Array> database = new HashMap();
-=======
+                            //HashMap<String, Array> databases = new HashMap();
+
                             HashMap<String, JSONArray> database = new HashMap();
->>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
+
                             for (String key : keys) {
                                 String jsonstring = pref.getString(key, "");
                                 JSONObject jsonObj = new JSONObject(jsonstring);
@@ -345,14 +342,12 @@ public class MainActivity extends AppCompatActivity  {
                                 //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
                             }
 
-<<<<<<< HEAD
+
 
 
 
                             //JSONArray jsonArray = new JSONArray(response);
-=======
-                            JSONArray jsonArray = new JSONArray(response);
->>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
+
                             //for loop for all the handwritten letters json
 
 
@@ -438,7 +433,7 @@ public class MainActivity extends AppCompatActivity  {
         return result;
     }
 
-<<<<<<< HEAD
+
 
     public String getSpace(){
 
@@ -518,6 +513,5 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-=======
->>>>>>> cd8591fa8d5b318eae25314ca9a2fc0c890ffcef
+
 }
