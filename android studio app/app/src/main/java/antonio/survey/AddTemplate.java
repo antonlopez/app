@@ -1,16 +1,12 @@
 package antonio.survey;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,8 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
@@ -28,6 +22,9 @@ import com.android.volley.request.SimpleMultiPartRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -91,8 +88,7 @@ public class AddTemplate extends AppCompatActivity {
 
 
                 EditText toField = (EditText) findViewById(R.id.editText);
-                 data = toField.getText().toString();
-
+                data = toField.getText().toString();
 
                 ArrayList arrayList = new ArrayList();
                 SaveFile();
@@ -118,9 +114,10 @@ public class AddTemplate extends AppCompatActivity {
         findViewById(R.id.doneButton).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
-                EditText toField = (EditText) findViewById(editText);
-                String data = toField.getText().toString();
+                //EditText toField = (EditText) findViewById(editText);
+               // String data = toField.getText().toString();
 
+                //This should also include functions in the nextLetter Button above
 
 
 
@@ -133,6 +130,11 @@ public class AddTemplate extends AppCompatActivity {
 
         findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+
+                EditText toField = (EditText) findViewById(editText);
+                String data = toField.getText().toString();
+
+
                 Intent i = new Intent(AddTemplate.this, MainActivity.class);
                 startActivity(i);
 
@@ -140,12 +142,6 @@ public class AddTemplate extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
     }
 
 

@@ -42,10 +42,10 @@
         android:id="@+id/nextLetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="49dp"
+        android:layout_marginBottom="32dp"
         android:text="Next letter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintHorizontal_bias="0.144"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintBottom_creator="1"
@@ -72,24 +72,28 @@
 
     <Button
         android:id="@+id/doneButton"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="49dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="55dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="49dp" />
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
   <Button
         android:id="@+id/done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"
-        tools:layout_editor_absoluteX="247dp"
-        tools:layout_editor_absoluteY="431dp"
-        tools:layout_constraintBottom="parent"/>
+      tools:layout_constraintBottom="parent"
+      tools:layout_constraintRight_creator="1"
+      tools:layout_constraintBottom_creator="1"
+      app:layout_constraintBottom_toBottomOf="parent"
+      android:layout_marginEnd="49dp"
+      app:layout_constraintRight_toRightOf="parent"
+      android:layout_marginBottom="32dp"
+      android:layout_marginRight="49dp" />
   
 </android.support.constraint.ConstraintLayout>
