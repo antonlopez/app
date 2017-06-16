@@ -48,8 +48,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        android:layout_marginBottom="55dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.834" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -68,4 +69,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/doneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="49dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="55dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="49dp" />
 </android.support.constraint.ConstraintLayout>
