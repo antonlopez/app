@@ -213,6 +213,8 @@ public class AddTemplate extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.d("Response", response);
                         try {
+
+
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             JSONArray jsonArray = new JSONArray(response);
 
@@ -225,6 +227,7 @@ public class AddTemplate extends AppCompatActivity {
 //                            String arr = jsonObject.getString("img");
                             pref.edit().putString(data.toString(), jsonObject.toString()).commit();
                             Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
+
 
                         } catch (JSONException e) {
                             // JSON error
