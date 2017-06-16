@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first);
 
-        fragmentManager = getSupportFragmentManager();//Get Fragment Manager
+        //fragmentManager = getSupportFragmentManager();//Get Fragment Manager
 
         verifyStoragePermissions(MainActivity.this);
 
@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity  {
         //setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        //mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        //mViewPager = (ViewPager) findViewById(R.id.container);
         //mViewPager.setAdapter(mSectionsPagerAdapter);
 
         findViewById(R.id.search).setOnClickListener(new View.OnClickListener() {
@@ -97,14 +97,8 @@ public class MainActivity extends AppCompatActivity  {
                 // in onCreate or any event where your want the user to
                 // select a file
                imageBrowse();
-//                Intent intent = new Intent();
-//                intent.setType(IMAGE_TYPE);
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), SELECT_SINGLE_PICTURE);
-                Intent intent = new Intent();
-                intent.setType(IMAGE_TYPE);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), SELECT_SINGLE_PICTURE);
+
+
 
 
             }
@@ -115,9 +109,16 @@ public class MainActivity extends AppCompatActivity  {
             public void onClick(View view) {
                 if (selectedImagePath != null) {
                     imageUpload(selectedImagePath);
+                    Intent i = new Intent(MainActivity.this, second.class);
+                    startActivity(i);
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
+
+
+
+
+
 
 
             }
@@ -180,14 +181,15 @@ public class MainActivity extends AppCompatActivity  {
             switch(position) {
 
                 case 0:
-                    first first = new first();
-                    return first;
+                    //first first = new first();
+                    //Toast.makeText(getApplicationContext(), "I am here", Toast.LENGTH_LONG).show();
+                    //return first;
                 case 1:
-                    second second = new second();
-                    return second;
+//                    second second = new second();
+//                    return second;
                 case 2:
-                    third third = new third();
-                    return third;
+                    //third third = new third();
+                    //return third;
                 default:
                     return null;
             }
@@ -278,101 +280,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_OK) {
-//            if (requestCode == SELECT_SINGLE_PICTURE) {
-//
-//                Uri selectedImageUri = data.getData();
-//                selectedImagePath = getRealPathFromURI(selectedImageUri);
-//                //selectedImagePath = getPath(selectedImageUri);
-//                try {
-//                    selectedImagePreview.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
-//                } catch (IOException e) {
-//                    Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
-//                }
-//                Toast.makeText(MainActivity.this, "this is the path" + selectedImagePath, Toast.LENGTH_LONG).show();
-//
-//                // original code
-////                String selectedImagePath = getPath(selectedImageUri);
-////                selectedImagePreview.setImageURI(selectedImageUri);
-//            }
-//            else if (requestCode == SELECT_MULTIPLE_PICTURE) {
-//                //And in the Result handling check for that parameter:
-//                if (Intent.ACTION_SEND_MULTIPLE.equals(data.getAction())
-//                        && data.hasExtra(Intent.EXTRA_STREAM)) {
-//                    // retrieve a collection of selected images
-//                    ArrayList<Parcelable> list = data.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-//                    // iterate over these images
-//                    if( list != null ) {
-//                        for (Parcelable parcel : list) {
-//                            Uri uri = (Uri) parcel;
-//                            // handle the images one by one here
-//                        }
-//                    }
-//
-//                    // for now just show the last picture
-//                    if( !list.isEmpty() ) {
-//                        Uri imageUri = (Uri) list.get(list.size() - 1);
-//
-//                        try {
-//                            selectedImagePreview.setImageBitmap(new UserPicture(imageUri, getContentResolver()).getBitmap());
-//                        } catch (IOException e) {
-//                            Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
-//                        }
-//                        // original code
-//                       String selectedImagePath = getPath(imageUri);
-//                       selectedImagePreview.setImageURI(imageUri);
-////                       displayPicture(selectedImagePath, selectedImagePreview);
-//                    }
-//                }
-//            }
-//        } else {
-//            // report failure
-//            Toast.makeText(getApplicationContext(), R.string.msg_failed_to_get_intent_data, Toast.LENGTH_LONG).show();
-//            Log.d(MainActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
-//        }
-//    }
 
-    /*
-     * helper to retrieve the path of an image URI
-     */
-//    public String getPath(Uri uri) {
-//
-//        // just some safety built in
-//        if( uri == null ) {
-//            // perform some logging or show user feedback
-//            Toast.makeText(getApplicationContext(), R.string.msg_failed_to_get_picture, Toast.LENGTH_LONG).show();
-//            Log.d(MainActivity.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
-//            return null;
-//        }
-//
-//        // try to retrieve the image from the media store first
-//        // this will only work for images selected from gallery
-//        String[] projection = { MediaStore.Images.Media.DATA };
-//        Cursor cursor = MainActivity.this.getContentResolver().query(uri, projection, null, null, null);
-//        if( cursor != null ){
-//            int column_index = cursor
-//                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//            cursor.moveToFirst();
-//
-//            return cursor.getString(column_index);
-//        }
-//        // this is our fallback here, thanks to the answer from @mad indicating this is needed for
-//        // working code based on images selected using other file managers
-//        return uri.getPath();
-//    }
-
-
-
-    public String getRealPathFromURI(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        @SuppressWarnings("deprecation")
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
 
 
     private void imageUpload(final String imagePath) {
@@ -389,14 +297,6 @@ public class MainActivity extends AppCompatActivity  {
                             JSONArray jObj = new JSONArray(response);
 
                             String img = jObj.getString(0);
-
-
-//                            String x_dim = jObj.getString(1);
-//                            String x_start = jObj.getString(2);
-//                            String y_dim = jObj.getString(3);
-//                            String y_start= jObj.getString(4);
-
-
 
                             Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
 

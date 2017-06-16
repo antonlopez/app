@@ -39,17 +39,18 @@
         tools:layout_constraintRight_creator="1" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/nextLetter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:layout_marginBottom="49dp"
+        android:text="Next letter"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.165"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="48dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        tools:layout_constraintRight_creator="1" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -68,4 +69,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        tools:layout_editor_absoluteX="247dp"
+        tools:layout_editor_absoluteY="431dp" />
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package antonio.survey;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +18,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +46,13 @@ public class AddTemplate extends AppCompatActivity {
 
     String selectedImagePath;
 
+    String data;
+
+
+    String x_start = "";
+
+
+    public static String BASE_URL = "http://172.19.144.219:12345/images";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +64,7 @@ public class AddTemplate extends AppCompatActivity {
 
                 // in onCreate or any event where your want the user to
                 // select a file
-                Intent intent = new Intent();
-                intent.setType(IMAGE_TYPE);
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, getString(R.string.select_picture)), SELECT_SINGLE_PICTURE);
+                imageBrowse();
             }
         });
 
@@ -68,25 +81,42 @@ public class AddTemplate extends AppCompatActivity {
 
 
 
-        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.nextLetter).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 
                 EditText toField = (EditText) findViewById(R.id.editText);
-                String data = toField.getText().toString();
+                 data = toField.getText().toString();
 
                 ArrayList arrayList = new ArrayList();
+
+                if (selectedImagePath != null) {
+                    imageUpload(selectedImagePath);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Include a letter!", Toast.LENGTH_SHORT).show();
+                }
 
 
                 // LetterTemplates letters = new LetterTemplates(data, img);
 
-                Intent i = new Intent(AddTemplate.this, MainActivity.class);
-                startActivity(i);
+
 
 
                 //this button will push the image to the database and store it with the
                 // cooresponding letter saving it in the process
             }
         });
+
+
+        findViewById(R.id.done).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Intent i = new Intent(AddTemplate.this, MainActivity.class);
+                startActivity(i);
+
+                Toast.makeText(getApplicationContext(), "Template saved...", Toast.LENGTH_LONG).show();
+
+            }
+        });
+
 
 
 
@@ -99,102 +129,97 @@ public class AddTemplate extends AppCompatActivity {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
-        }
+    private void imageBrowse() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // Start the Intent
+        startActivityForResult(galleryIntent, SELECT_SINGLE_PICTURE);
     }
 
 
 
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_SINGLE_PICTURE) {
 
-                Uri selectedImageUri = data.getData();
-                selectedImagePath = getPath(selectedImageUri);
-                try {
-                    selectedImagePreview.setImageBitmap(new UserPicture(selectedImageUri, getContentResolver()).getBitmap());
-                } catch (IOException e) {
-                    Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
-                }
-                Toast.makeText(AddTemplate.this, "this is the path" + selectedImagePath, Toast.LENGTH_LONG).show();
+            if(requestCode == SELECT_SINGLE_PICTURE){
+                Uri picUri = data.getData();
 
-                // original code
-//                String selectedImagePath = getPath(selectedImageUri);
-//                selectedImagePreview.setImageURI(selectedImageUri);
+                selectedImagePath = getPath(picUri);
+
+                Log.d("picUri", picUri.toString());
+                Log.d("filePath", selectedImagePath);
+
+
+                selectedImagePreview.setImageURI(picUri);
+
             }
-            else if (requestCode == SELECT_MULTIPLE_PICTURE) {
-                //And in the Result handling check for that parameter:
-                if (Intent.ACTION_SEND_MULTIPLE.equals(data.getAction())
-                        && data.hasExtra(Intent.EXTRA_STREAM)) {
-                    // retrieve a collection of selected images
-                    ArrayList<Parcelable> list = data.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-                    // iterate over these images
-                    if( list != null ) {
-                        for (Parcelable parcel : list) {
-                            Uri uri = (Uri) parcel;
-                            // handle the images one by one here
-                        }
-                    }
 
-                    // for now just show the last picture
-                    if( !list.isEmpty() ) {
-                        Uri imageUri = (Uri) list.get(list.size() - 1);
-
-                        try {
-                            selectedImagePreview.setImageBitmap(new UserPicture(imageUri, getContentResolver()).getBitmap());
-                        } catch (IOException e) {
-                            Log.e(MainActivity.class.getSimpleName(), "Failed to load image", e);
-                        }
-                        // original code
-                        String selectedImagePath = getPath(imageUri);
-                        selectedImagePreview.setImageURI(imageUri);
-//                        displayPicture(selectedImagePath, selectedImagePreview);
-                    }
-                }
-            }
-        } else {
-            // report failure
-            Toast.makeText(getApplicationContext(), R.string.msg_failed_to_get_intent_data, Toast.LENGTH_LONG).show();
-            Log.d(MainActivity.class.getSimpleName(), "Failed to get intent data, result code is " + resultCode);
         }
+
     }
 
     /**
      * helper to retrieve the path of an image URI
      */
-    public String getPath(Uri uri) {
-
-        // just some safety built in
-        if( uri == null ) {
-            // perform some logging or show user feedback
-            Toast.makeText(getApplicationContext(), R.string.msg_failed_to_get_picture, Toast.LENGTH_LONG).show();
-            Log.d(MainActivity.class.getSimpleName(), "Failed to parse image path from image URI " + uri);
-            return null;
-        }
-
-        // try to retrieve the image from the media store first
-        // this will only work for images selected from gallery
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        if( cursor != null ){
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }
-        // this is our fallback here, thanks to the answer from @mad indicating this is needed for
-        // working code based on images selected using other file managers
-        return uri.getPath();
+    private String getPath(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String result = cursor.getString(column_index);
+        cursor.close();
+        return result;
     }
+
+
+
+    private void imageUpload(final String imagePath) {
+
+        SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, BASE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                        try {
+//                            JSONObject jObj = new JSONObject(response);
+//                            String message = jObj.getString("message");
+
+                            JSONArray jObj = new JSONArray(response);
+
+                            String img = jObj.getString(0);
+
+                            DataManager.serverData = img;
+
+
+                           // Toast.makeText(getApplicationContext(), "Letter: "+ data +" saved...", Toast.LENGTH_LONG).show();
+
+                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+
+                        } catch (JSONException e) {
+                            // JSON error
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        smr.addFile("image", imagePath);
+        ServerConnect.getInstance().addToRequestQueue(smr);
+
+    }
+
+
+
+
+
+
+
 }
