@@ -98,7 +98,10 @@ public class AddTemplate extends AppCompatActivity {
                 data = toField.getText().toString();
 
                 ArrayList arrayList = new ArrayList();
-                SaveFile();
+                //SaveFile();
+
+                Toast.makeText(getApplicationContext(), "Letter saved...", Toast.LENGTH_SHORT).show();
+
 
                 if (selectedImagePath != null) {
                     imageUpload(selectedImagePath);
@@ -226,7 +229,12 @@ public class AddTemplate extends AppCompatActivity {
 //
 //                            String arr = jsonObject.getString("img");
                             pref.edit().putString(data.toString(), jsonObject.toString()).commit();
-                            Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), pref.getString(data.toString(),""), Toast.LENGTH_SHORT).show();
+
+//                            int[] winningNumbers = { 400, 10, 4, 3, 2, 5, 6, 7, 9, 1 };
+//
+//                            DataManager.template = winningNumbers;
+
 
 
 
