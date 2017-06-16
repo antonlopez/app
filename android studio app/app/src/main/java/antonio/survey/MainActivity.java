@@ -29,6 +29,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.error.VolleyError;
 import com.android.volley.request.SimpleMultiPartRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,11 @@ public class MainActivity extends AppCompatActivity  {
     private ImageView selectedImagePreview;
 
     String selectedImagePath;
+
+    int x_start_i;
+    int y_start_i;
+    int x_dim_i;
+    int y_dim_i;
 
     public static String BASE_URL = "http://172.19.144.219:12345/images";
 
@@ -295,13 +301,34 @@ public class MainActivity extends AppCompatActivity  {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         Log.d("Response", response);
+                        JSONArray jsonArray = null;
+
                         try {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
+                            for (String key : keys) {
+                                JSONObject LETTERS = jsonArray.getJSONObject(i);
+                                jsonArray = new JSONArray(response);
+
+                                String jsonstring = pref.getString(key, "");
+
+
+
+                                Gson g = new Gson();
+                                Player p = g.fromJson(jsonString, Player.class);
+
+
+
 
                             JSONArray jsonArray = new JSONArray(response);
+                                String arr_t = LETTERS.getString("img");
+
+                            }
+
+                            //JSONArray jsonArray = new JSONArray(response);
                             //for loop for all the handwritten letters json
                             for (int i= 0; i<jsonArray.length(); i++) {
 //
@@ -368,6 +395,63 @@ public class MainActivity extends AppCompatActivity  {
         String result = cursor.getString(column_index);
         cursor.close();
         return result;
+    }
+
+
+    public String getSpace(){
+
+        double x1;
+        double x2;
+        double y1;
+        double y2;
+        double xVal;
+        double yVal;
+        double powVal;
+        double sqrtVal;
+        double powX;
+        double powY;
+
+        String result = null;
+
+
+
+       // public double distanceForm(double x2, double x1, double y2, double y1){
+            xVal = (x_dim_i - x_start_i);
+            yVal = (y_dim_i - y_start_i );
+
+//            xVal = (x2 - x1);
+//            yVal = (y2 - y1);
+
+
+
+            powX = Math.pow(xVal, 2);
+            powY = Math.pow(yVal, 2);
+
+            powVal = powX + powY;
+
+            sqrtVal = Math.sqrt(powVal);
+       // }
+
+
+
+
+        double someNum = 10;
+        if(sqrtVal > someNum){
+                //add space
+                result = " ";
+
+        }
+
+
+
+        return result;
+    }
+
+    public String getOrder(){
+
+
+
+        return null;
     }
 
 
