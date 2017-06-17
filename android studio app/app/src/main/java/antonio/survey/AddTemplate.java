@@ -81,9 +81,6 @@ public class AddTemplate extends AppCompatActivity {
 
         selectedImagePreview = (ImageView)findViewById(R.id.imageView);
 
-
-
-
         findViewById(R.id.nextLetter).setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
 

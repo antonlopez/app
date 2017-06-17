@@ -35,9 +35,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -294,7 +299,7 @@ public class MainActivity extends AppCompatActivity  {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
-                            HashMap<String, JSONArray> database = new HashMap();
+                            HashMap<String, int[]> database = new HashMap();
                             for (String key : keys) {
                                 String jsonstring = pref.getString(key, "");
                                 JSONObject jsonObj = new JSONObject(jsonstring);
@@ -311,19 +316,20 @@ public class MainActivity extends AppCompatActivity  {
                                 for (int i = 0; i < array.length(); i++) {
                                     numbers[i] = array.optInt(i);
                                 }
-                                database.put(key, array);
-                                //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
-                            }
+
+                                database.put(key, numbers);
+//                                Toast.makeText(getApplicationContext(), database.get("e").toString(), Toast.LENGTH_LONG).show();
+                          }
 
                             JSONArray jsonArray = new JSONArray(response);
+
+
                             //for loop for all the handwritten letters json
                             for (int i= 0; i<jsonArray.length(); i++) {
 //
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
                                 int x_start_i = LETTERS.getInt("x_start");
                                 int y_start_i = LETTERS.getInt("y_start");
-                                int x_dim_i = LETTERS.getInt("x_dim");
-                                int y_dim_i = LETTERS.getInt("y_dim");
 
                                 JSONArray arr_i = LETTERS.optJSONArray("img");
 
@@ -337,23 +343,67 @@ public class MainActivity extends AppCompatActivity  {
                                 for (int j = 0; j < arr_i.length(); j++) {
                                     pixels[i] = arr_i.optInt(i);
                                 }
-
-                                for (Map.Entry<String, JSONArray> entry : database.entrySet()) {
+                                String letter="";
+                                double inf = Double.POSITIVE_INFINITY;
+                                //iterate through each element in database for comparison
+                                for (Map.Entry<String, int[]> entry : database.entrySet()) {
                                     String key = entry.getKey();
-                                    JSONArray value = entry.getValue();
-                                    for (int k=0; i<arr_i.length(); k++) {
+                                    int[] value = entry.getValue();
+                                    //iterate through each index in array
+                                    double sum = 0;
+                                    for (int k = 0; k<arr_i.length()-1; k++) {
                                         //index value in uplaoded handwriting pixels[k];
                                         //index value in template value[k];
                                         //comparison code goes here
                                         //store minimum score letter somewhere and then write that to a text box
+                                        sum += Math.pow(pixels[k], 2) + Math.pow(value[k],2);
+                                    }
+                                    double feature = Math.sqrt(sum);
+                                    if (feature < inf ){
+                                        inf = feature;
+                                        letter = key;
                                     }
                                     }
-
-
+                                //put the recognized letter into json object
+                                LETTERS.put("letter", letter);
                                // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
                             }
+                            //put sorting text here
+                            JSONArray sortedJsonArray = new JSONArray();
 
-                         //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
+                            List<JSONObject> jsonValues = new ArrayList<JSONObject>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                jsonValues.add(jsonArray.getJSONObject(i));
+                            }
+                            Collections.sort( jsonValues, new Comparator<JSONObject>() {
+                                //CHANGE THE KEY NAME TO SORT BY SOMETHING DIFFERENT
+                                private static final String KEY_NAME = "y_start";
+
+                                @Override
+                                public int compare(JSONObject a, JSONObject b) {
+                                    String valA = new String();
+                                    String valB = new String();
+
+                                    try {
+                                        valA = (String) a.get(KEY_NAME);
+                                        valB = (String) b.get(KEY_NAME);
+                                    }
+                                    catch (JSONException e) {
+                                    }
+
+                                    return valA.compareTo(valB);
+                                    //if you want to change the sort order, simply use the following:
+                                    //return -valA.compareTo(valB);
+                                }
+                            });
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                sortedJsonArray.put(jsonValues.get(i));
+                            }
+
+                            for (int i=0; i< sortedJsonArray.length();i++){
+                                Log.d("letters", ""+ sortedJsonArray.getJSONObject(i).getString("letter"));
+                            }
 
                         } catch (JSONException e) {
                             // JSON error
