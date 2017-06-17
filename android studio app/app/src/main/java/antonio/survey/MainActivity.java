@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity  {
 
                     imageUpload(selectedImagePath);
 
-                    if(DataManager.serverData != null){
+
                     Intent i = new Intent(MainActivity.this, second.class);
-                    startActivity(i);}
+                    startActivity(i);
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
