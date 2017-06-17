@@ -35,46 +35,36 @@ public class second extends AppCompatActivity {
 
         EditText displayText = (EditText) findViewById(R.id.displayText);
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
 
-        int start = Math.max(displayText.getSelectionStart(), 0);
-        int end = Math.max(displayText.getSelectionEnd(), 0);
-        displayText.getText().replace(Math.min(start, end), Math.max(start, end),
-                DataManager.serverData, 0, DataManager.serverData.length());
-=======
 //        int start = Math.max(displayText.getSelectionStart(), 0);
 //        int end = Math.max(displayText.getSelectionEnd(), 0);
 //        displayText.getText().replace(Math.min(start, end), Math.max(start, end),
 //                DataManager.serverData, 0, DataManager.serverData.length());
->>>>>>> juan-compare-letters
+
+//        int start = Math.max(displayText.getSelectionStart(), 0);
+//        int end = Math.max(displayText.getSelectionEnd(), 0);
+//        displayText.getText().replace(Math.min(start, end), Math.max(start, end),
+//                DataManager.serverData, 0, DataManager.serverData.length());
+
+//        int start = Math.max(displayText.getSelectionStart(), 0);
+//        int end = Math.max(displayText.getSelectionEnd(), 0);
+//        displayText.getText().replace(Math.min(start, end), Math.max(start, end),
+//                DataManager.serverData, 0, DataManager.serverData.length());
 
 
 
 
-
-
-
-=======
-<<<<<<< HEAD
-//
 //        displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
 
 
         //displayText.getText().insert(displayText.getSelectionStart(), DataManager.serverData);
-=======
+
 //        int start = Math.max(displayText.getSelectionStart(), 0);
 //        int end = Math.max(displayText.getSelectionEnd(), 0);
 //        displayText.getText().replace(Math.min(start, end), Math.max(start, end),
 //                DataManager.serverData, 0, DataManager.serverData.length());
 
 
-
-
-
-
->>>>>>> juan-compare-letters
->>>>>>> Stashed changes
 
 
         saveFile.setOnClickListener(new View.OnClickListener() {
