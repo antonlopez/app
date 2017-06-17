@@ -97,9 +97,6 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-
-
-
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -137,13 +134,6 @@ public class MainActivity extends AppCompatActivity  {
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
-
-
-
-
-
-
-
             }
         });
 
@@ -379,7 +369,7 @@ public class MainActivity extends AppCompatActivity  {
                                         inf = feature;
                                         letter = key;
                                     }
-                                    }
+                                }
                                 //put the recognized letter into json object
                                 LETTERS.put("letter", letter);
                                // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
@@ -515,3 +505,88 @@ public class MainActivity extends AppCompatActivity  {
 
 
 }
+
+
+   /*public String getSpace(){
+
+        double x1;
+        double x2;
+        double y1;
+        double y2;
+        double xVal;
+        double yVal;
+        double powVal;
+        double sqrtVal;
+        double powX;
+        double powY;
+
+        String result = null;
+
+
+
+       // public double distanceForm(double x2, double x1, double y2, double y1){
+            xVal = (x_dim_i - x_start_i);
+            yVal = (y_dim_i - y_start_i );
+
+//            xVal = (x2 - x1);
+//            yVal = (y2 - y1);
+
+
+
+            powX = Math.pow(xVal, 2);
+            powY = Math.pow(yVal, 2);
+
+            powVal = powX + powY;
+
+            sqrtVal = Math.sqrt(powVal);
+       // }
+
+
+
+
+        double someNum = 10;
+        if(sqrtVal > someNum){
+                //add space
+                result = " ";
+
+        }
+
+
+
+        return result;
+    }
+
+    public String getOrder(){
+
+        double x1 = x_start_i;
+        double x2 = x_dim_i;
+        double y1 = y_start_i;
+        double y2 = y_dim_i;
+
+        int i = 1;
+
+
+        Object obj = jsonArray.getJSONObject(i);
+
+
+        //iterate through the object
+
+        String nextLetter;
+        for (int i= 0; i<jsonArrayLength; i++) {
+            if(y2){
+                if(there is no greater x){
+                    add y, x = 0
+                }
+            }
+
+        }
+//pull array1 x_dim
+        //pull array2 x_start
+
+
+        return null;
+    }
+
+    public Array getNextLetter(){
+        return null;}
+    }*/
