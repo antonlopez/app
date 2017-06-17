@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Baptist student ministry Survey</string>
+    <string name="app_name">Image to text converter</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="msg_failed_to_get_intent_data"></string>

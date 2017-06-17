@@ -69,6 +69,13 @@ public class MainActivity extends AppCompatActivity  {
 
     String selectedImagePath;
 
+    int x_start_i;
+    int y_start_i;
+    int x_dim_i;
+    int y_dim_i;
+    int jsonArrayLength = 0;
+
+
     public static String BASE_URL = "http://172.19.144.219:12345/images";
 
 
@@ -121,9 +128,12 @@ public class MainActivity extends AppCompatActivity  {
 
             public void onClick(View view) {
                 if (selectedImagePath != null) {
+
                     imageUpload(selectedImagePath);
+
+                    if(DataManager.serverData != null){
                     Intent i = new Intent(MainActivity.this, second.class);
-                    startActivity(i);
+                    startActivity(i);}
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
@@ -300,6 +310,7 @@ public class MainActivity extends AppCompatActivity  {
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
                             HashMap<String, int[]> database = new HashMap();
+
                             for (String key : keys) {
                                 String jsonstring = pref.getString(key, "");
                                 JSONObject jsonObj = new JSONObject(jsonstring);
@@ -321,10 +332,15 @@ public class MainActivity extends AppCompatActivity  {
 //                                Toast.makeText(getApplicationContext(), database.get("e").toString(), Toast.LENGTH_LONG).show();
                           }
 
+
                             JSONArray jsonArray = new JSONArray(response);
 
 
+
                             //for loop for all the handwritten letters json
+
+
+
                             for (int i= 0; i<jsonArray.length(); i++) {
 //
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
@@ -405,6 +421,10 @@ public class MainActivity extends AppCompatActivity  {
                                 Log.d("letters", ""+ sortedJsonArray.getJSONObject(i).getString("letter"));
                             }
 
+
+
+
+
                         } catch (JSONException e) {
                             // JSON error
                             e.printStackTrace();
@@ -433,5 +453,65 @@ public class MainActivity extends AppCompatActivity  {
         cursor.close();
         return result;
     }
+
+
+
+    public String getSpace(){
+
+        double x1;
+        double x2;
+        double y1;
+        double y2;
+        double xVal;
+        double yVal;
+        double powVal;
+        double sqrtVal;
+        double powX;
+        double powY;
+
+        String result = null;
+
+
+
+       // public double distanceForm(double x2, double x1, double y2, double y1){
+            xVal = (x_dim_i - x_start_i);
+            yVal = (y_dim_i - y_start_i );
+
+//            xVal = (x2 - x1);
+//            yVal = (y2 - y1);
+
+
+
+            powX = Math.pow(xVal, 2);
+            powY = Math.pow(yVal, 2);
+
+            powVal = powX + powY;
+
+            sqrtVal = Math.sqrt(powVal);
+       // }
+
+
+
+
+        double someNum = 10;
+        if(sqrtVal > someNum){
+                //add space
+                result = " ";
+
+        }
+
+
+
+        return result;
+    }
+
+    public Array getNextLetter(){
+
+        return null;}
+
+
+
+
+
 
 }
