@@ -35,9 +35,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 
 public class MainActivity extends AppCompatActivity  {
@@ -64,6 +69,13 @@ public class MainActivity extends AppCompatActivity  {
 
     String selectedImagePath;
 
+    int x_start_i;
+    int y_start_i;
+    int x_dim_i;
+    int y_dim_i;
+    int jsonArrayLength = 0;
+
+
     public static String BASE_URL = "http://172.19.144.219:12345/images";
 
 
@@ -82,9 +94,6 @@ public class MainActivity extends AppCompatActivity  {
         //fragmentManager = getSupportFragmentManager();//Get Fragment Manager
 
         verifyStoragePermissions(MainActivity.this);
-
-
-
 
 
 
@@ -119,19 +128,12 @@ public class MainActivity extends AppCompatActivity  {
 
                     imageUpload(selectedImagePath);
 
-                    if(DataManager.serverData != null){
+
                     Intent i = new Intent(MainActivity.this, second.class);
-                    startActivity(i);}
+                    startActivity(i);
                 } else {
                     Toast.makeText(getApplicationContext(), "Image not selected!", Toast.LENGTH_LONG).show();
                 }
-
-
-
-
-
-
-
             }
         });
 
@@ -286,14 +288,6 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-
-
-
-
-
-
-
-
     private void imageUpload(final String imagePath) {
 
         SimpleMultiPartRequest smr = new SimpleMultiPartRequest(Request.Method.POST, BASE_URL,
@@ -305,14 +299,14 @@ public class MainActivity extends AppCompatActivity  {
                             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             Map<String,?> entries = pref.getAll();
                             Set<String> keys = entries.keySet();
-                            HashMap<String, Array> database = new HashMap();
+                            HashMap<String, int[]> database = new HashMap();
+
                             for (String key : keys) {
                                 String jsonstring = pref.getString(key, "");
                                 JSONObject jsonObj = new JSONObject(jsonstring);
 
                                 //JSONArray arr_t = jsonObj.getJSONArray("img");
                                 JSONArray array = jsonObj.optJSONArray("img");
-                                Log.d("array length", ""+ array.length());
                                 // Deal with the case of a non-array value.
                                 if (array == null) { /*...*/ }
 
@@ -324,40 +318,101 @@ public class MainActivity extends AppCompatActivity  {
                                     numbers[i] = array.optInt(i);
                                 }
 
-                                //database.put(key, arr_t);
-                                //Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
+                                database.put(key, numbers);
+//                                Toast.makeText(getApplicationContext(), database.get("e").toString(), Toast.LENGTH_LONG).show();
+                          }
 
-                            }
 
                             JSONArray jsonArray = new JSONArray(response);
+
+
+
                             //for loop for all the handwritten letters json
+
+
+
                             for (int i= 0; i<jsonArray.length(); i++) {
 //
                                 JSONObject LETTERS = jsonArray.getJSONObject(i);
-
                                 int x_start_i = LETTERS.getInt("x_start");
                                 int y_start_i = LETTERS.getInt("y_start");
-                                int x_dim_i = LETTERS.getInt("x_dim");
-                                int y_dim_i = LETTERS.getInt("y_dim");
-                                String arr_i = LETTERS.getString("img");
 
+                                JSONArray arr_i = LETTERS.optJSONArray("img");
 
+                                // Deal with the case of a non-array value.
+                                if (arr_i == null) { /*...*/ }
+
+                                // Create an int array to accomodate the numbers.
+                                int[] pixels = new int[arr_i.length()];
+
+                                // Extract numbers from JSON array.
+                                for (int j = 0; j < arr_i.length(); j++) {
+                                    pixels[i] = arr_i.optInt(i);
+                                }
+                                String letter="";
+                                double inf = Double.POSITIVE_INFINITY;
+                                //iterate through each element in database for comparison
+                                for (Map.Entry<String, int[]> entry : database.entrySet()) {
+                                    String key = entry.getKey();
+                                    int[] value = entry.getValue();
+                                    //iterate through each index in array
+                                    double sum = 0;
+                                    for (int k = 0; k<arr_i.length()-1; k++) {
+                                        //index value in uplaoded handwriting pixels[k];
+                                        //index value in template value[k];
+                                        //comparison code goes here
+                                        //store minimum score letter somewhere and then write that to a text box
+                                        sum += Math.pow(pixels[k], 2) + Math.pow(value[k],2);
+                                    }
+                                    double feature = Math.sqrt(sum);
+                                    if (feature < inf ){
+                                        inf = feature;
+                                        letter = key;
+                                    }
+                                }
+                                //put the recognized letter into json object
+                                LETTERS.put("letter", letter);
                                // Toast.makeText(getApplicationContext(), arr, Toast.LENGTH_LONG).show();
+                            }
+                            //put sorting text here
+                            JSONArray sortedJsonArray = new JSONArray();
+
+                            List<JSONObject> jsonValues = new ArrayList<JSONObject>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                jsonValues.add(jsonArray.getJSONObject(i));
+                            }
+                            Collections.sort( jsonValues, new Comparator<JSONObject>() {
+                                //CHANGE THE KEY NAME TO SORT BY SOMETHING DIFFERENT
+                                private static final String KEY_NAME = "y_start";
+
+                                @Override
+                                public int compare(JSONObject a, JSONObject b) {
+                                    String valA = new String();
+                                    String valB = new String();
+
+                                    try {
+                                        valA = (String) a.get(KEY_NAME);
+                                        valB = (String) b.get(KEY_NAME);
+                                    }
+                                    catch (JSONException e) {
+                                    }
+
+                                    return valA.compareTo(valB);
+                                    //if you want to change the sort order, simply use the following:
+                                    //return -valA.compareTo(valB);
+                                }
+                            });
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                sortedJsonArray.put(jsonValues.get(i));
+                            }
+
+                            for (int i=0; i< sortedJsonArray.length();i++){
+                                Log.d("letters", ""+ sortedJsonArray.getJSONObject(i).getString("letter"));
                             }
 
 
-                         //   Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
 
-<<<<<<< HEAD
-=======
-                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
-
-                            DataManager.serverData = img;
->>>>>>> juan-compare-letters
-
-                            //Toast.makeText(getApplicationContext(), img, Toast.LENGTH_LONG).show();
-
-                            DataManager.serverData = img;
 
 
                         } catch (JSONException e) {
@@ -378,8 +433,6 @@ public class MainActivity extends AppCompatActivity  {
 
     }
 
-
-
     private String getPath(Uri contentUri) {
         String[] proj = { MediaStore.Images.Media.DATA };
         CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
@@ -393,6 +446,147 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+    public String getSpace(){
+
+        double x1;
+        double x2;
+        double y1;
+        double y2;
+        double xVal;
+        double yVal;
+        double powVal;
+        double sqrtVal;
+        double powX;
+        double powY;
+
+        String result = null;
+
+
+
+       // public double distanceForm(double x2, double x1, double y2, double y1){
+            xVal = (x_dim_i - x_start_i);
+            yVal = (y_dim_i - y_start_i );
+
+//            xVal = (x2 - x1);
+//            yVal = (y2 - y1);
+
+
+
+            powX = Math.pow(xVal, 2);
+            powY = Math.pow(yVal, 2);
+
+            powVal = powX + powY;
+
+            sqrtVal = Math.sqrt(powVal);
+       // }
+
+
+
+
+        double someNum = 10;
+        if(sqrtVal > someNum){
+                //add space
+                result = " ";
+
+        }
+
+
+
+        return result;
+    }
+
+    public Array getNextLetter(){
+
+        return null;}
+
+
+
+
 
 
 }
+
+
+   /*public String getSpace(){
+
+        double x1;
+        double x2;
+        double y1;
+        double y2;
+        double xVal;
+        double yVal;
+        double powVal;
+        double sqrtVal;
+        double powX;
+        double powY;
+
+        String result = null;
+
+
+
+       // public double distanceForm(double x2, double x1, double y2, double y1){
+            xVal = (x_dim_i - x_start_i);
+            yVal = (y_dim_i - y_start_i );
+
+//            xVal = (x2 - x1);
+//            yVal = (y2 - y1);
+
+
+
+            powX = Math.pow(xVal, 2);
+            powY = Math.pow(yVal, 2);
+
+            powVal = powX + powY;
+
+            sqrtVal = Math.sqrt(powVal);
+       // }
+
+
+
+
+        double someNum = 10;
+        if(sqrtVal > someNum){
+                //add space
+                result = " ";
+
+        }
+
+
+
+        return result;
+    }
+
+    public String getOrder(){
+
+        double x1 = x_start_i;
+        double x2 = x_dim_i;
+        double y1 = y_start_i;
+        double y2 = y_dim_i;
+
+        int i = 1;
+
+
+        Object obj = jsonArray.getJSONObject(i);
+
+
+        //iterate through the object
+
+        String nextLetter;
+        for (int i= 0; i<jsonArrayLength; i++) {
+            if(y2){
+                if(there is no greater x){
+                    add y, x = 0
+                }
+            }
+
+        }
+//pull array1 x_dim
+        //pull array2 x_start
+
+
+        return null;
+    }
+
+    public Array getNextLetter(){
+        return null;}
+    }*/
