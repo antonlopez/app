@@ -225,12 +225,15 @@ public class AddTemplate extends AppCompatActivity {
 //                            DataManager.template = winningNumbers;
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 
 
 
 
 =======
 >>>>>>> juan-compare-letters
+>>>>>>> master
 
 
 

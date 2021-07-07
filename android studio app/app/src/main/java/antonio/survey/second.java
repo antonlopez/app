@@ -37,17 +37,34 @@ public class second extends AppCompatActivity {
 
 <<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+//        int start = Math.max(displayText.getSelectionStart(), 0);
+//        int end = Math.max(displayText.getSelectionEnd(), 0);
+//        displayText.getText().replace(Math.min(start, end), Math.max(start, end),
+//                DataManager.serverData, 0, DataManager.serverData.length());
+=======
+>>>>>>> Stashed changes
+=======
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+>>>>>>> master
 
         int start = Math.max(displayText.getSelectionStart(), 0);
         int end = Math.max(displayText.getSelectionEnd(), 0);
         displayText.getText().replace(Math.min(start, end), Math.max(start, end),
                 DataManager.serverData, 0, DataManager.serverData.length());
+<<<<<<< HEAD
+>>>>>>> origin/juan-compare-letters
+
+=======
 =======
 //        int start = Math.max(displayText.getSelectionStart(), 0);
 //        int end = Math.max(displayText.getSelectionEnd(), 0);
 //        displayText.getText().replace(Math.min(start, end), Math.max(start, end),
 //                DataManager.serverData, 0, DataManager.serverData.length());
 >>>>>>> juan-compare-letters
+>>>>>>> master
 
 
 
